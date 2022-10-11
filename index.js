@@ -14,3 +14,15 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log("server connected port On " + port);
 });
+
+/*
+
+job
+
+Candidate /user
+
+Hiring Manager
+
+Admin
+
+*/
