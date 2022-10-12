@@ -3,7 +3,7 @@ const {
   getJobsServices,
   getJobByIdServices,
   updateJobByIdServices,
-} = require("../services/Jobs.services");
+} = require("../services/jobs.services");
 
 exports.createJobs = async (req, res, next) => {
   try {

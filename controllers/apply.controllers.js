@@ -1,5 +1,5 @@
 const { createJobApplyServices } = require("../services/jobApply.services");
-const { getJobByIdServices, appliedJob } = require("../services/Jobs.services");
+const { getJobByIdServices, appliedJob } = require("../services/jobs.services");
 
 exports.createJobApply = async (req, res, next) => {
   //   const { id } = req.params;

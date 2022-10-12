@@ -1,7 +1,7 @@
 const {
   getManagersJobsServices,
   getJobByIdManager,
-} = require("../services/Jobs.services");
+} = require("../services/jobs.services");
 
 exports.getManagerAllJobs = async (req, res, next) => {
   try {
