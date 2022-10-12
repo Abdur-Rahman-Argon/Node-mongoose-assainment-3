@@ -23,7 +23,28 @@ exports.createJobs = async (req, res, next) => {
 
 exports.getJobs = async (req, res, next) => {
   try {
-    const jobs = await getJobsServices();
+    const queries = {};
+
+    const filters = { ...req.query };
+
+    const excludeFields = ["sort", "page", "limit"];
+    excludeFields.forEach((field) => delete filters[field]);
+
+    //sortby
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      queries.sortBy = sortBy;
+    }
+
+    // page & limit
+    if (req.query.page) {
+      // console.log(req.query);
+      const { page = 1, limit = 4 } = req.query;
+      const skip = (page - 1) * parseInt(limit);
+      queries.skip = skip;
+      queries.limit = parseInt(limit);
+    }
+    const jobs = await getJobsServices(filters, queries);
 
     res.status(200).json({
       status: "success",
@@ -38,7 +59,8 @@ exports.getJobs = async (req, res, next) => {
 };
 
 exports.getJobById = async (req, res, next) => {
-  const { id } = reg.params;
+  const { id } = req.params;
+  console.log(id);
   try {
     const job = await getJobByIdServices(id);
 

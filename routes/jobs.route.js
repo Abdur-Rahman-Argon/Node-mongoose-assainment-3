@@ -7,8 +7,8 @@ const verifyToken = require("../middleware/verifyToken");
 router.post("/", jobsControllers.createJobs).get("/", jobsControllers.getJobs);
 
 router
-  .get("/id", verifyToken, jobsControllers.getJobById)
+  .get("/:id", jobsControllers.getJobById)
   .post("/:id/apply", verifyToken, createJobApply)
-  .patch("/id", jobsControllers.updateJobById);
+  .patch("/id", verifyToken, jobsControllers.updateJobById);
 
 module.exports = router;

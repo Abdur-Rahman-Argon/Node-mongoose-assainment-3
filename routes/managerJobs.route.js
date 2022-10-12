@@ -5,7 +5,7 @@ const verifyToken = require("../middleware/verifyToken");
 
 router
   .get("/", verifyToken, managerJobsControllers.getManagerAllJobs)
-  .get("/id", verifyToken, managerJobsControllers.getManagerJobById);
-//   .patch("/id", jobsControllers.updateJobById);
+  .get("/:id", verifyToken, managerJobsControllers.getManagerJobById);
+//   .patch("/id", verifyToken,  jobsControllers.updateJobById);
 
 module.exports = router;

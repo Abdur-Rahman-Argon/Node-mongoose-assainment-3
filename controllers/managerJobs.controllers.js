@@ -1,6 +1,14 @@
+const {
+  getManagersJobsServices,
+  getJobByIdManager,
+} = require("../services/Jobs.services");
+
 exports.getManagerAllJobs = async (req, res, next) => {
   try {
-    const jobs = await getJobsServices();
+    const managerId = req?.user?.userId;
+    const managerEmail = req?.user?.email;
+    // console.log(managerId);
+    const jobs = await getManagersJobsServices(managerEmail, managerId);
 
     res.status(200).json({
       status: "success",
@@ -16,7 +24,8 @@ exports.getManagerAllJobs = async (req, res, next) => {
 
 exports.getManagerJobById = async (req, res, next) => {
   try {
-    const jobs = await getJobsServices();
+    const { id } = req.params;
+    const jobs = await getJobByIdManager(id);
 
     res.status(200).json({
       status: "success",

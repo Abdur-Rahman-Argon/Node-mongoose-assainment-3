@@ -6,6 +6,7 @@ const { generateToken } = require("../utils/token");
 
 exports.signUpUser = async (req, res, next) => {
   try {
+    // console.log(req.body);
     const user = await signUpServices(req.body);
 
     res.status(200).json({
@@ -23,7 +24,7 @@ exports.signUpUser = async (req, res, next) => {
 exports.logInUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
+    console.log(req.body);
     if (!email || !password) {
       return res.status(401).json({
         status: "fail",
@@ -32,7 +33,7 @@ exports.logInUser = async (req, res, next) => {
     }
 
     const user = await findUserByEmail(email);
-
+    // console.log(user);
     if (!user) {
       return res.status(401).json({
         status: "fail",
@@ -40,34 +41,34 @@ exports.logInUser = async (req, res, next) => {
       });
     }
 
-    const isPasswordValid = user.comparePassword(password, user.password);
+    // const isPasswordValid = user.comparePassword(password, user.password);
 
-    if (!isPasswordValid) {
+    if (password === user.password) {
+      const token = generateToken(user);
+
+      const { password: pwd, ...others } = user.toObject();
+
+      res.status(200).json({
+        status: "success",
+        message: "User logIn successfully",
+        data: {
+          others,
+          token,
+        },
+      });
+    } else {
       return res.status(401).json({
         status: "fail",
         error: "password is not correct",
       });
     }
 
-    if (user.status != "active") {
-      return res.status(401).json({
-        status: "fail",
-        error: "user isn't active",
-      });
-    }
-
-    const token = generateToken(user);
-
-    const { password: pwd, ...others } = user.toObject();
-
-    res.status(200).json({
-      status: "success",
-      message: "User logIn successfully",
-      data: {
-        user: others,
-        token,
-      },
-    });
+    // if (user.status != "active") {
+    //   return res.status(401).json({
+    //     status: "fail",
+    //     error: "user isn't active",
+    //   });
+    // }
   } catch (error) {
     res.status(500).json({
       status: "fail",

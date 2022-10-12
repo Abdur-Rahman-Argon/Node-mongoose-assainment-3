@@ -8,8 +8,6 @@ const jobsSchema = mongoose.Schema(
       type: String,
       required: [true, " name must be required"],
       trim: true,
-      unique: [true, "name must be Unique"],
-      lowercase: true,
       minLength: [5, "Name must less then 5 characters"],
       maxLength: [50, " Name is Too long"],
     },
@@ -42,7 +40,6 @@ const jobsSchema = mongoose.Schema(
 
     status: {
       type: String,
-      required: true,
       enum: {
         values: ["active", "expired", "closed"],
         message: " Status can't be {VALUE}",
@@ -52,27 +49,27 @@ const jobsSchema = mongoose.Schema(
 
     description: {
       type: String,
-      required: true,
     },
 
     jobRequirement: {
       type: String,
-      required: true,
+      // required: [true, " jobRequirement must be required"],
     },
 
     hiringManagers: {
       name: {
         type: String,
-        required: true,
+        required: [true, " name must be required"],
       },
       email: {
         type: String,
         lowercase: true,
+        required: [true, " email must be required"],
         validate: [validator.isEmail, "please provide a valid Email"],
       },
       id: {
         type: ObjectId,
-        ref: "HiringManagers",
+        ref: "Users",
         required: true,
       },
     },
@@ -80,16 +77,19 @@ const jobsSchema = mongoose.Schema(
     Company: {
       name: {
         type: String,
-        required: true,
+        // required: true,
       },
       id: {
         type: ObjectId,
         ref: "Company",
-        required: true,
+        // required: true,
       },
     },
 
-    Location: String,
+    location: {
+      type: String,
+      required: [true, " Job Location must be required"],
+    },
 
     fullAddress: {
       type: String,
@@ -102,7 +102,7 @@ const jobsSchema = mongoose.Schema(
       },
     ],
 
-    viewCount: {
+    views: {
       type: Number,
     },
   },
