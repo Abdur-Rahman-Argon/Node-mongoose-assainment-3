@@ -36,7 +36,9 @@ const jobsSchema = mongoose.Schema(
       min: [0, " salary cannot be negative"],
     },
 
-    // deadline: {},
+    deadline: {
+      type: Date,
+    },
 
     status: {
       type: String,

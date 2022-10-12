@@ -69,9 +69,31 @@ exports.logInUser = async (req, res, next) => {
       },
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       status: "fail",
       error: "LogIn User failed",
+    });
+  }
+};
+
+// get me api controller
+exports.getMe = async (req, res) => {
+  try {
+    const user = await findUserByEmail(req?.user?.email);
+    const { password: pwd, ...others } = user.toObject();
+
+    res.status(200).json({
+      status: "success",
+      message: "User logIn successfully",
+      data: {
+        user: others,
+      },
+    });
+    // res.json(req.user);
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      error,
     });
   }
 };
