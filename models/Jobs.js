@@ -1,5 +1,6 @@
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const jobsSchema = mongoose.Schema(
   {
@@ -37,14 +38,15 @@ const jobsSchema = mongoose.Schema(
 
     // deadline: {},
 
-    // status:  {
-    //     type: String,
-    //     required: true,
-    //     enum: {
-    //       values: ["", "out-of-stock", "discontinued"],
-    //       message: " Status can't be {VALUE}",
-    //     },
-    //   },
+    status: {
+      type: String,
+      required: true,
+      enum: {
+        values: ["active", "expired", "closed"],
+        message: " Status can't be {VALUE}",
+      },
+      default: "active",
+    },
 
     description: {
       type: String,
@@ -60,6 +62,11 @@ const jobsSchema = mongoose.Schema(
       name: {
         type: String,
         required: true,
+      },
+      email: {
+        type: String,
+        lowercase: true,
+        validate: [validator.isEmail, "please provide a valid Email"],
       },
       id: {
         type: ObjectId,

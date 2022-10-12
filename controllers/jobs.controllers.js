@@ -5,7 +5,7 @@ const {
   updateJobByIdServices,
 } = require("../services/Jobs.services");
 
-exports.createJob = async (req, res, next) => {
+exports.createJobs = async (req, res, next) => {
   try {
     const result = await createJobsServices(req.body);
 

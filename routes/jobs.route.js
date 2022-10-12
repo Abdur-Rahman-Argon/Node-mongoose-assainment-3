@@ -5,6 +5,7 @@ const jobsControllers = require("../controllers/jobs.controllers");
 router.post("/", jobsControllers.createJobs).get("/", jobsControllers.getJobs);
 router
   .patch("/id", jobsControllers.updateJobById)
-  .get("/id", jobsControllers.getJobById);
+  .get("/id", jobsControllers.getJobById)
+  .post("/:id/apply");
 
 module.exports = router;

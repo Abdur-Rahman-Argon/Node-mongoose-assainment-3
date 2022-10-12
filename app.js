@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 
 const jobsRoute = require("./routes/jobs.route");
-// const brandRoute = require("./routes/brand.route");
+const user = require("./routes/user.route");
 
 // const stockRoute = require("./routes/stock.route");
 
@@ -16,7 +16,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/jobs", jobsRoute);
-// app.use("/api/v1/brand", brandRoute);
-// app.use("/api/v1/stock", stockRoute);
+// app.use("/api/v1//manager/jobs", managerJobsRoute);
+app.use("/api/v1/user", user);
+// app.use("/api/v1/user/me", stockRoute);
 
 module.exports = app;
